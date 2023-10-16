@@ -14,7 +14,7 @@ namespace RefrigeratorProject
         private string _kindOfItem;
         private string _cashrot;
         private DateTime _expiryDate;
-        private double _placeTakenByItem;
+        private double _placeTaken;
 
         public string IdItem
         { get { return _idItem; } 
@@ -51,14 +51,14 @@ namespace RefrigeratorProject
             {
                 _expiryDate = value;
             } }
-        public double PlaceTakenByItem
-        { get { return _placeTakenByItem;}
+        public double PlaceTaken
+        { get { return _placeTaken;}
             set
             {
-                _placeTakenByItem = value;
+                _placeTaken = value;
             } }
        
-        public Item(string idItem, string nameItem, string idShelfOfItem, string kindOfItem, string cashrot, DateTime expiryDate, double placeTakenByItem)
+        public Item(string idItem, string nameItem, string idShelfOfItem, string kindOfItem, string cashrot, DateTime expiryDate, double placeTaken)
         {
             
             NameItem = nameItem;
@@ -66,13 +66,13 @@ namespace RefrigeratorProject
             KindOfItem = kindOfItem;
             Cashrot = cashrot;
             ExpiryDate = expiryDate;
-            PlaceTakenByItem = placeTakenByItem;
+            PlaceTaken = placeTaken;
            
         }
 
         public override string ToString()
         {
-            return "Item id: " + _idItem + " name: " + _nameItem + " in shelf: " + IdShelfOfItem + " kind: " + _kindOfItem + " cashtot: " + _cashrot + " expery date: " + _expiryDate.ToString() + " place taken by item: " + _placeTakenByItem.ToString();
+            return "Item id: " + _idItem + " name: " + _nameItem + " in shelf: " + IdShelfOfItem + " kind: " + _kindOfItem + " cashtot: " + _cashrot + " expery date: " + _expiryDate.ToString() + " place taken by item: " + _placeTaken.ToString();
         }
     }
 }
