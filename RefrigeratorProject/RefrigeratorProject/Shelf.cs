@@ -58,7 +58,7 @@ namespace RefrigeratorProject
 
         public override string ToString()
         {
-            return " shelf: " + _idShelf + " the level of the shelf: " + _numOfShelfLevel.ToString() + " place in shelf: " + _placeInShelf + " the items in the shelf : " + _shelfItems;
+            return " shelf: " + _idShelf + " the level of the shelf: " + _numOfShelfLevel.ToString() + " place in shelf: " + _placeInShelf + " the items in the shelf : " + _Items;
         }
 
         public double PlaceLeftinShelf()
@@ -71,7 +71,7 @@ namespace RefrigeratorProject
             return _placeInShelf - placeTakenByItems;
         }
 
-        public bool LeftPlaceFor(Item item)
+        public bool IsLeftPlaceFor(Item item)
         {
             var leftPlace = PlaceLeftinShelf();
             if (item.PlaceTaken > leftPlace)
@@ -86,7 +86,7 @@ namespace RefrigeratorProject
 
         public bool AddItem(Item item)
         {
-            var isEnter = LeftPlaceFor(item);
+            var isEnter = IsLeftPlaceFor(item);
 
             if (!isEnter)
             {
@@ -96,6 +96,50 @@ namespace RefrigeratorProject
             _Items.Add(item);
             item.IdShelfOfItem = _idShelf;
             return true;
+        }
+
+        public int IndexOfItem(string idItem)
+        {
+            for (var index = 0; index < _Items.Count; index++)
+            {
+                if (_Items[index].IdShelfOfItem == idItem)
+                {
+                    return index;
+                }
+            }
+            return -1;
+        }
+        public Item TakeOutItem(int indexItem)
+        {
+            var item = _Items[indexItem];
+            _Items.RemoveAt(indexItem);
+            return item;
+        }
+
+        public void RemoveExpiredItems()
+        {
+            foreach (var item in _Items)
+            {
+                if (item.ExpiryDate < DateTime.Now)
+                {
+                    _Items.Remove(item);
+                }
+            }
+        }
+
+       
+        public List<Item> ItemsWithSpesific(string cashrot , string kind)
+        {
+            List<Item> itemsWithSpesific = new List<Item>();
+            foreach (var item in _Items)
+            {
+                if (item.Cashrot==cashrot && item.KindOfItem==kind && item.IsNotExpiredItem())
+
+                {
+                    itemsWithSpesific.Add(item);
+                }
+            }
+            return itemsWithSpesific;
         }
 
     }

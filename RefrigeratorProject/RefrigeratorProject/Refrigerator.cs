@@ -97,17 +97,50 @@ namespace RefrigeratorProject
 
         public void EnterItem(Item item)
         {
-            
-                var isEntered = this.IsEnterItem(item);
-                if (isEntered)
+
+            var isEntered = this.IsEnterItem(item);
+            if (isEntered)
+            {
+                Console.WriteLine("the item added successfuly");
+            }
+            else
+            {
+                Console.WriteLine("there is no place to the otem in the refrigerator");
+            }
+
+        }
+
+        public Item? TakeOutItem(string idItem)
+        {
+            var indexItem = 0;
+            foreach (var shelf in _shelves)
+            {
+                if (shelf.IndexOfItem(idItem) != -1)
                 {
-                    Console.WriteLine("the item added successfuly");
-                }
-                else
-                {
-                    Console.WriteLine("there is no place to the otem in the refrigerator");
+                    return shelf.TakeOutItem(indexItem);
                 }
             }
+            return null;
         }
+
+        public void RemoveExpiredItems()
+        {
+            foreach (var shelf in _shelves)
+            {
+                shelf.RemoveExpiredItems();
+            }
+        }
+
+        public List<Item> WantToEat(string cashrot , string kind)
+        {
+            var wantedItem = new List<Item>();
+            foreach( var shelf in _shelves)
+            {
+                wantedItem.AddRange(shelf.ItemsWithSpesific(cashrot, kind));
+            }
+            return wantedItem;
+        }
+
+
     }
 }
