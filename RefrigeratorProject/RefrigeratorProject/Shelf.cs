@@ -40,5 +40,18 @@ namespace RefrigeratorProject
             {
                 _shelfItems = value;
             } }
+
+        public Shelf(int numOfShelfLevel,double placeInShelf, List<Item> shelfItems)
+        {
+            NumOfShelfLevel = numOfShelfLevel;
+            PlaceInShelf = placeInShelf;
+            ShelfItems = shelfItems;
+        }
+
+        public override string ToString()
+        {
+            return " shelf: " + _idShelf + " the level of the shelf: " + _numOfShelfLevel.ToString() + " place in shelf: " + _placeInShelf + " the items in the shelf : " + _shelfItems;
+         }
+
     }
 }

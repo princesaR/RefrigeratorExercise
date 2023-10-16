@@ -58,6 +58,21 @@ namespace RefrigeratorProject
                 _placeTakenByItem = value;
             } }
        
-        
+        public Item(string idItem, string nameItem, string idShelfOfItem, string kindOfItem, string cashrot, DateTime expiryDate, double placeTakenByItem)
+        {
+            
+            NameItem = nameItem;
+            IdShelfOfItem = idShelfOfItem;
+            KindOfItem = kindOfItem;
+            Cashrot = cashrot;
+            ExpiryDate = expiryDate;
+            PlaceTakenByItem = placeTakenByItem;
+           
+        }
+
+        public override string ToString()
+        {
+            return "Item id: " + _idItem + " name: " + _nameItem + " in shelf: " + IdShelfOfItem + " kind: " + _kindOfItem + " cashtot: " + _cashrot + " expery date: " + _expiryDate.ToString() + " place taken by item: " + _placeTakenByItem.ToString();
+        }
     }
 }
