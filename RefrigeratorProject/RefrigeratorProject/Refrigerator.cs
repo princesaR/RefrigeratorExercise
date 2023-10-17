@@ -60,7 +60,7 @@ namespace RefrigeratorProject
 
         public Refrigerator(string model, string color, int numOfShelf, List<Shelf> shelves)
         {
-            IdRefrigerator = _uniqueId++;
+            IdRefrigerator = _Id++;
             Model = model;
             Color = color;
             Model = model;
@@ -71,7 +71,13 @@ namespace RefrigeratorProject
 
         public override string ToString()
         {
-            return " Refrigerator : " + _idRefrigerator + " model: " + _model.ToString() + " number of shelves : " + _numOfShelf.ToString() + " the list of the shelves : " + _shelves;
+            var result = "";
+            result += " Refrigerator : " + _idRefrigerator + " model: " + _model.ToString() + " number of shelves : " + _numOfShelf.ToString() + " the selves: /n";
+            foreach (var shelf in Shelves)
+            {
+                result += shelf.ToString() + "/n";
+            }
+            return result;
         }
 
         public double PlaceLeftinRefrigerator()

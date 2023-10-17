@@ -84,7 +84,7 @@ namespace RefrigeratorProject
 
         public Item(string idItem, string nameItem, Shelf shelf, string kindOfItem, Cosher cosher, DateTime expiryDate, double placeTaken)
         {
-            IdItem = (++_ID).ToString();
+            IdItem = (++_Id).ToString();
             NameItem = nameItem;
             Shelf = shelf;
             KindOfItem = kindOfItem;

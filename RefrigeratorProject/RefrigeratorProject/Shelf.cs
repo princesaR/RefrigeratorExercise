@@ -52,7 +52,7 @@ namespace RefrigeratorProject
 
         public Shelf(int numOfShelfLevel, double placeInShelf, List<Item> items)
         {
-            IdShelf = (++_uniqueId).ToString();
+            IdShelf = (++_Id).ToString();
             NumOfShelfLevel = numOfShelfLevel;
             PlaceInShelf = placeInShelf;
             Items = new List<Item>();
@@ -61,7 +61,13 @@ namespace RefrigeratorProject
 
         public override string ToString()
         {
-            return " shelf: " + _idShelf + " the level of the shelf: " + _numOfShelfLevel.ToString() + " place in shelf: " + _placeInShelf + " the items in the shelf : " + _Items;
+            var result = "";
+            result += " shelf: " + _idShelf + " the level of the shelf: " + _numOfShelfLevel.ToString() + " place in shelf: " + _placeInShelf + " the items in the shelf : ";
+            foreach (var item in Items)
+            {
+                result += item.ToString();
+            }
+            return result;
         }
 
         public double PlaceLeftinShelf()
