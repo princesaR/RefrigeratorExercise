@@ -6,20 +6,29 @@ using System.Threading.Tasks;
 
 namespace RefrigeratorProject
 {
+    public enum Cosher
+    {
+        Milky,
+        Meat,
+        Pareve
+    }
+
+
     public class Item
     {
+        private static int _Id =0;
         private string _idItem;
         private string _nameItem;
-        private string _idShelfOfItem;
+        private Shelf shelf;
         private string _kindOfItem;
-        private string _cashrot;
+        private Cosher _cosher;
         private DateTime _expiryDate;
         private double _placeTaken;
 
         public string IdItem
         {
             get { return _idItem; }
-            set
+            private set
             {
                 _idItem = value;
             }
@@ -32,12 +41,12 @@ namespace RefrigeratorProject
                 _nameItem = value;
             }
         }
-        public string IdShelfOfItem
+        public Shelf Shelf
         {
-            get { return IdShelfOfItem; }
+            get { return shelf; }
             set
             {
-                IdShelfOfItem = value;
+                shelf = value;
             }
         }
         public string KindOfItem
@@ -48,12 +57,12 @@ namespace RefrigeratorProject
                 _kindOfItem = value;
             }
         }
-        public string Cashrot
+        public Cosher Cosher
         {
-            get { return _cashrot; }
+            get { return _cosher; }
             set
             {
-                _cashrot = value;
+                _cosher = value;
             }
         }
         public DateTime ExpiryDate
@@ -73,13 +82,13 @@ namespace RefrigeratorProject
             }
         }
 
-        public Item(string idItem, string nameItem, string idShelfOfItem, string kindOfItem, string cashrot, DateTime expiryDate, double placeTaken)
+        public Item(string idItem, string nameItem, Shelf shelf, string kindOfItem, Cosher cosher, DateTime expiryDate, double placeTaken)
         {
-
+            IdItem = (++_ID).ToString();
             NameItem = nameItem;
-            IdShelfOfItem = idShelfOfItem;
+            Shelf = shelf;
             KindOfItem = kindOfItem;
-            Cashrot = cashrot;
+            Cosher = cosher;
             ExpiryDate = expiryDate;
             PlaceTaken = placeTaken;
 
@@ -87,7 +96,7 @@ namespace RefrigeratorProject
 
         public override string ToString()
         {
-            return "Item id: " + _idItem + " name: " + _nameItem + " in shelf: " + IdShelfOfItem + " kind: " + _kindOfItem + " cashtot: " + _cashrot + " expery date: " + _expiryDate.ToString() + " place taken by item: " + _placeTaken.ToString();
+            return "Item id: " + _idItem + " name: " + _nameItem + " in shelf: " + shelf.ToString() + " kind: " + _kindOfItem + " cashtot: " + _cosher.ToString() + " expery date: " + _expiryDate.ToString() + " place taken by item: " + _placeTaken.ToString();
         }
 
         public bool IsNotExpiredItem()

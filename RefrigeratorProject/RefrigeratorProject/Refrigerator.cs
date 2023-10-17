@@ -10,7 +10,7 @@ namespace RefrigeratorProject
 {
     public class Refrigerator
     {
-        private static int _uniqueId = 1;
+        private static int _Id = 1;
         private int _idRefrigerator;
         private string _model;
         private string _color;
@@ -171,7 +171,6 @@ namespace RefrigeratorProject
         }
 
 
-        
 
     }
 }

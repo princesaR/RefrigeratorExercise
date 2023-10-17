@@ -8,6 +8,7 @@ namespace RefrigeratorProject
 {
     public class Shelf
     {
+        private static int _Id = 0;
         private string _idShelf;
 
         private int _numOfShelfLevel;
@@ -19,7 +20,7 @@ namespace RefrigeratorProject
         public string IdShelf
         {
             get { return _idShelf; }
-            set
+            private set
             {
                 _idShelf = value;
             }
@@ -51,8 +52,10 @@ namespace RefrigeratorProject
 
         public Shelf(int numOfShelfLevel, double placeInShelf, List<Item> items)
         {
+            IdShelf = (++_uniqueId).ToString();
             NumOfShelfLevel = numOfShelfLevel;
             PlaceInShelf = placeInShelf;
+            Items = new List<Item>();
             Items = items;
         }
 
@@ -94,7 +97,7 @@ namespace RefrigeratorProject
             }
 
             _Items.Add(item);
-            item.IdShelfOfItem = _idShelf;
+            item.Shelf = this;
             return true;
         }
 
@@ -102,7 +105,7 @@ namespace RefrigeratorProject
         {
             for (var index = 0; index < _Items.Count; index++)
             {
-                if (_Items[index].IdShelfOfItem == idItem)
+                if (_Items[index].IdItem == idItem)
                 {
                     return index;
                 }
@@ -127,13 +130,13 @@ namespace RefrigeratorProject
             }
         }
 
-
-        public List<Item> ItemsWithSpesific(string cashrot, string kind)
+      
+        public List<Item> ItemsWithSpesific(Cosher cashrot, string kind)
         {
             List<Item> itemsWithSpesific = new List<Item>();
             foreach (var item in _Items)
             {
-                if (item.Cashrot == cashrot && item.KindOfItem == kind && item.IsNotExpiredItem())
+                if (item.Cosher == cashrot && item.KindOfItem == kind && item.IsNotExpiredItem())
 
                 {
                     itemsWithSpesific.Add(item);
