@@ -4,21 +4,23 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace RefrigeratorProject
 {
     public class Refrigerator
     {
-        private string _idRefrigerator;
+        private static int _uniqueId = 1;
+        private int _idRefrigerator;
         private string _model;
         private string _color;
         private int _numOfShelf;
         private List<Shelf> _shelves;
 
-        public string IdRefrigerator
+        public int IdRefrigerator
         {
             get { return _idRefrigerator; }
-            set
+            private set
             {
                 _idRefrigerator = value;
             }
@@ -58,6 +60,7 @@ namespace RefrigeratorProject
 
         public Refrigerator(string model, string color, int numOfShelf, List<Shelf> shelves)
         {
+            IdRefrigerator = _uniqueId++;
             Model = model;
             Color = color;
             Model = model;
@@ -131,16 +134,44 @@ namespace RefrigeratorProject
             }
         }
 
-        public List<Item> WantToEat(string cashrot , string kind)
+        public List<Item> WantToEat(string cashrot, string kind)
         {
             var wantedItem = new List<Item>();
-            foreach( var shelf in _shelves)
+            foreach (var shelf in _shelves)
             {
                 wantedItem.AddRange(shelf.ItemsWithSpesific(cashrot, kind));
             }
             return wantedItem;
         }
 
+        public List<Item> SortAllItemsByExpiraynDate()
+        {
+            var sortedItems = new List<Item>();
+            foreach (var shelf in _shelves)
+            {
+                var shelfSortedItems = shelf.SortProductsByExpirationDate();
+                sortedItems.AddRange(shelfSortedItems);
+            }
+            return sortedItems;
+        }
+
+        public List<Shelf> SortedShelvesByLeftPlace()
+        {
+            var sortedShelves = new List<Shelf>();
+            sortedShelves = _shelves.OrderBy(shelf => shelf.PlaceLeftinShelf()).ToList();
+            return sortedShelves;
+        }
+
+        public static List<Refrigerator> SortedRefrigeratorsByLeftPlace(List<Refrigerator> refrigerators)
+        {
+            var sortedByLeftPlace = new List<Refrigerator>();
+            sortedByLeftPlace = refrigerators.OrderBy(r => r.PlaceLeftinRefrigerator()).ToList();
+            return sortedByLeftPlace;
+
+        }
+
+
+        
 
     }
 }

@@ -127,13 +127,13 @@ namespace RefrigeratorProject
             }
         }
 
-       
-        public List<Item> ItemsWithSpesific(string cashrot , string kind)
+
+        public List<Item> ItemsWithSpesific(string cashrot, string kind)
         {
             List<Item> itemsWithSpesific = new List<Item>();
             foreach (var item in _Items)
             {
-                if (item.Cashrot==cashrot && item.KindOfItem==kind && item.IsNotExpiredItem())
+                if (item.Cashrot == cashrot && item.KindOfItem == kind && item.IsNotExpiredItem())
 
                 {
                     itemsWithSpesific.Add(item);
@@ -141,6 +141,15 @@ namespace RefrigeratorProject
             }
             return itemsWithSpesific;
         }
+
+        public List<Item> SortProductsByExpirationDate()
+        {
+            var sortedByDate = new List<Item>();
+            sortedByDate = _Items.OrderBy(d => d.ExpiryDate).ToList();
+            return sortedByDate;
+        }
+
+
 
     }
 }
