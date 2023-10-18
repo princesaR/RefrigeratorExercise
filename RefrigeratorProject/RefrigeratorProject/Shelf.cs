@@ -14,6 +14,7 @@ namespace RefrigeratorProject
         private int _numOfShelfLevel;
 
         private double _placeInShelf;
+        private double _currentPlace;
 
         private List<Item> _Items;
 
@@ -41,6 +42,24 @@ namespace RefrigeratorProject
                 _placeInShelf = value;
             }
         }
+        public double CurrentPlace
+        {
+            get { return _currentPlace; }
+            set
+            {
+
+                if (value <= _placeInShelf && value >= 0)
+                {
+                    _currentPlace = value;
+                }
+                else
+                {
+                    throw new Exception("Attempting to add an item larger than the current remaining space");
+                }
+
+            }
+        }
+
         public List<Item> Items
         {
             get { return _Items; }
@@ -62,11 +81,19 @@ namespace RefrigeratorProject
         public override string ToString()
         {
             var result = "";
-            result += " shelf: " + _idShelf + " the level of the shelf: " + _numOfShelfLevel.ToString() + " place in shelf: " + _placeInShelf + " the items in the shelf : ";
-            foreach (var item in Items)
+            result += " shelf: " + _idShelf + ". the level of the shelf: " + _numOfShelfLevel.ToString() + ". place in shelf: " + _placeInShelf + ". the items in the shelf : \n";
+            if (_Items.Count() == 0)
             {
-                result += item.ToString();
+                result += "there is no items in this shelf.";
             }
+            else
+            {
+                foreach (var item in Items)
+                {
+                    result += (item.ToString())+". \n";
+                }
+            }
+
             return result;
         }
 
@@ -125,19 +152,26 @@ namespace RefrigeratorProject
             return item;
         }
 
-        public void RemoveExpiredItems()
+        public List<Item> RemoveExpiredItems()
         {
+            var now = DateTime.Now;
+            var removedItem = new List<Item>();
+
             foreach (var item in _Items)
             {
-                if (item.ExpiryDate < DateTime.Now)
+                if (item.ExpiryDate < now)
                 {
-                    _Items.Remove(item);
+
+                    removedItem.Add(item);
+
                 }
             }
+            _Items.RemoveAll(item => item.ExpiryDate < now);
+            return removedItem;
         }
 
-      
-        public List<Item> ItemsWithSpesific(Cosher cashrot, string kind)
+
+        public List<Item> ItemsWithSpesific(Cosher cashrot, Kind kind)
         {
             List<Item> itemsWithSpesific = new List<Item>();
             foreach (var item in _Items)
@@ -151,14 +185,28 @@ namespace RefrigeratorProject
             return itemsWithSpesific;
         }
 
-        public List<Item> SortProductsByExpirationDate()
+        public double GetPlaceItemsByDateAndCosher(DateTime date, Cosher cosher)
         {
-            var sortedByDate = new List<Item>();
-            sortedByDate = _Items.OrderBy(d => d.ExpiryDate).ToList();
-            return sortedByDate;
+
+            var leftPlace = 0.0;
+            foreach (var item in _Items)
+            {
+                if (item.ExpiryDate < date && item.Cosher == cosher)
+                {
+
+                    leftPlace += item.PlaceTaken;
+                }
+            }
+            return leftPlace;
+        }
+
+        public void RemoveByDateAndCosher(DateTime date, Cosher cosher)
+        {
+
+            _Items.RemoveAll(item => item.ExpiryDate < date && item.Cosher == cosher);
         }
 
 
-
     }
+
 }

@@ -13,14 +13,19 @@ namespace RefrigeratorProject
         Pareve
     }
 
-
+    public enum Kind
+    {
+        Food,
+        Drink
+    }
+    
     public class Item
     {
         private static int _Id =0;
         private string _idItem;
         private string _nameItem;
         private Shelf shelf;
-        private string _kindOfItem;
+        private Kind _kindOfItem;
         private Cosher _cosher;
         private DateTime _expiryDate;
         private double _placeTaken;
@@ -49,7 +54,7 @@ namespace RefrigeratorProject
                 shelf = value;
             }
         }
-        public string KindOfItem
+        public Kind KindOfItem
         {
             get { return _kindOfItem; }
             set
@@ -82,11 +87,10 @@ namespace RefrigeratorProject
             }
         }
 
-        public Item(string idItem, string nameItem, Shelf shelf, string kindOfItem, Cosher cosher, DateTime expiryDate, double placeTaken)
+        public Item(string nameItem,Kind kindOfItem, Cosher cosher, DateTime expiryDate, double placeTaken)
         {
             IdItem = (++_Id).ToString();
             NameItem = nameItem;
-            Shelf = shelf;
             KindOfItem = kindOfItem;
             Cosher = cosher;
             ExpiryDate = expiryDate;
@@ -96,7 +100,8 @@ namespace RefrigeratorProject
 
         public override string ToString()
         {
-            return "Item id: " + _idItem + " name: " + _nameItem + " in shelf: " + shelf.ToString() + " kind: " + _kindOfItem + " cashtot: " + _cosher.ToString() + " expery date: " + _expiryDate.ToString() + " place taken by item: " + _placeTaken.ToString();
+            var result = "Item id: " + _idItem + " name: " + _nameItem  + " kind: " + _kindOfItem + " cashtot: " + _cosher.ToString() + " expery date: " + _expiryDate.ToString() + " place taken by item: " + _placeTaken + " ";
+            return result;
         }
 
         public bool IsNotExpiredItem()

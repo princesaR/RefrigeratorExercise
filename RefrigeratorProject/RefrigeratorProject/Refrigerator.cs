@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace RefrigeratorProject
 {
@@ -30,6 +31,7 @@ namespace RefrigeratorProject
             get { return _model; }
             set
             {
+                
                 _model = value;
             }
         }
@@ -72,12 +74,20 @@ namespace RefrigeratorProject
         public override string ToString()
         {
             var result = "";
-            result += " Refrigerator : " + _idRefrigerator + " model: " + _model.ToString() + " number of shelves : " + _numOfShelf.ToString() + " the selves: /n";
-            foreach (var shelf in Shelves)
+            result += " Refrigerator : " + _idRefrigerator + ". model: " + _model.ToString() + ". number of shelves : " + _numOfShelf.ToString() + ". the selves: \n \n";
+            if (NumOfShelf == 0)
             {
-                result += shelf.ToString() + "/n";
+                result += "there are not shleves.";
             }
+            else {
+                foreach (var shelf in Shelves)
+                {
+                    result += shelf.ToString() + ". \n \n";
+                }
+            }
+            
             return result;
+
         }
 
         public double PlaceLeftinRefrigerator()
@@ -90,7 +100,7 @@ namespace RefrigeratorProject
             return leftPlace;
         }
 
-        public bool IsEnterItem(Item item)
+        private bool IsEnterItem(Item item)
         {
             foreach (var shelf in _shelves)
             {
@@ -114,7 +124,7 @@ namespace RefrigeratorProject
             }
             else
             {
-                Console.WriteLine("there is no place to the otem in the refrigerator");
+                Console.WriteLine("there is no place to the item in the refrigerator");
             }
 
         }
@@ -132,15 +142,18 @@ namespace RefrigeratorProject
             return null;
         }
 
-        public void RemoveExpiredItems()
+        public List<Item> RemoveExpiredItems()
         {
+            var removedItems = new List<Item>();
             foreach (var shelf in _shelves)
             {
-                shelf.RemoveExpiredItems();
+               var removedFromShelf = shelf.RemoveExpiredItems();
+                removedItems.AddRange(removedFromShelf);
             }
+            return removedItems;
         }
 
-        public List<Item> WantToEat(string cashrot, string kind)
+        public List<Item> WantToEat(Cosher cashrot, Kind kind)
         {
             var wantedItem = new List<Item>();
             foreach (var shelf in _shelves)
@@ -152,13 +165,14 @@ namespace RefrigeratorProject
 
         public List<Item> SortAllItemsByExpiraynDate()
         {
-            var sortedItems = new List<Item>();
+            var items = new List<Item>();
             foreach (var shelf in _shelves)
             {
-                var shelfSortedItems = shelf.SortProductsByExpirationDate();
-                sortedItems.AddRange(shelfSortedItems);
+                items.AddRange(shelf.Items);
             }
-            return sortedItems;
+            var now = DateTime.Now;
+            items = items.OrderBy(item => (now - item.ExpiryDate).Duration()).ToList();
+            return items;
         }
 
         public List<Shelf> SortedShelvesByLeftPlace()
@@ -178,5 +192,123 @@ namespace RefrigeratorProject
 
 
 
+        public void Shopping()
+        {
+            var leftPlace = PlaceLeftinRefrigerator();
+            if (leftPlace < 29)
+            {
+                
+                PrepereForShopping(leftPlace);
+            }
+            else
+            {
+                Console.WriteLine(" go shopping there is Enough space : " + leftPlace);
+            }
+        }
+
+        public void PrepereForShopping(double leftPlace)
+        {
+
+            var removedItems = this.RemoveExpiredItems();
+            leftPlace += SumOfPlaceByItems(removedItems);
+            Console.WriteLine(leftPlace);
+            if (leftPlace < 20)
+            {
+                CountMilky(leftPlace);
+            }
+            else
+            {
+                Console.WriteLine("after we remove the expairy items go shopping!");
+            }
+
+        }
+        public void CountMilky(double leftPlace)
+        {
+            leftPlace = CountByDateAndCosher(leftPlace, 3, Cosher.Milky);
+            Console.WriteLine(leftPlace);
+            if (leftPlace >= 20)
+            {
+                RemoveByDateAndCosher(3, Cosher.Milky);
+                Console.WriteLine("remove milky items, go shopping! left place: " + leftPlace);
+            }
+            else
+            {
+                CountMeat(leftPlace);
+            }
+        }
+
+        public void CountMeat(double leftPlace)
+        {
+            leftPlace = CountByDateAndCosher(leftPlace, 7, Cosher.Meat);
+            Console.WriteLine(leftPlace);
+            if (leftPlace >= 20)
+            {
+                RemoveByDateAndCosher(7, Cosher.Meat);
+                RemoveByDateAndCosher(3, Cosher.Milky);
+                Console.WriteLine("remove milky & meat items, go shopping! left place: " + leftPlace);
+            }
+            else
+            {
+                CountPareve(leftPlace);
+            }
+        }
+
+        public void CountPareve(double leftPlace)
+        {
+            leftPlace = CountByDateAndCosher(leftPlace, 1, Cosher.Pareve);
+            if (leftPlace >= 20)
+            {
+                RemoveByDateAndCosher(7, Cosher.Meat);
+                RemoveByDateAndCosher(3, Cosher.Milky);
+                RemoveByDateAndCosher(1, Cosher.Pareve);
+                Console.WriteLine("remove milky & meat & pareve items, go shopping! left place: " + leftPlace);
+            }
+            else
+            {
+                Console.WriteLine("the refrigerator is full no need for shopping");
+            }
+        }
+
+        public double CountByDateAndCosher(double leftPlace, int day, Cosher cosher)
+        {
+            var date = DateTime.Now;
+            foreach (var shelf in _shelves)
+            {
+                leftPlace += shelf.GetPlaceItemsByDateAndCosher(date.AddDays(day), cosher);
+            }
+            return leftPlace;
+        }
+
+        public void RemoveByDateAndCosher(int day, Cosher cosher)
+        {
+            var date = DateTime.Now;
+            foreach (var shelf in _shelves)
+            {
+                shelf.RemoveByDateAndCosher(date.AddDays(day), cosher);
+            }
+            
+        }
+        public double SumOfPlaceByItems(List<Item> items) 
+        {
+            var sum = 0.0;
+            foreach (var item in items)
+            {
+                sum += item.PlaceTaken;
+            }
+            return sum;
+        }
+
+
     }
+
+
+
 }
+
+
+
+
+
+
+
+
