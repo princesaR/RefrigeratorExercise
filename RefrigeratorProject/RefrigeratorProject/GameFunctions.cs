@@ -96,7 +96,7 @@ namespace RefrigeratorProject
             while (!valid)
             {
                 input = Console.ReadLine();
-                if (int.TryParse(input, out number))
+                if (int.TryParse(input, out number) && number > 0)
                 {
                     valid = true;
                 }
@@ -118,7 +118,7 @@ namespace RefrigeratorProject
             while (!valid)
             {
                 input = Console.ReadLine();
-                if (double.TryParse(input, out doubleNum))
+                if (double.TryParse(input, out doubleNum) && doubleNum > 0)
                 {
                     valid = true;
                 }
