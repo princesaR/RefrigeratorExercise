@@ -78,19 +78,21 @@ namespace RefrigeratorProject
             Items = items;
         }
 
+        
         public override string ToString()
         {
             var result = "";
-            result += " shelf: " + _idShelf + ". the level of the shelf: " + _numOfShelfLevel.ToString() + ". place in shelf: " + _placeInShelf + ". the items in the shelf : \n";
+            result += "shelf: " + _idShelf + ", the level of the shelf: " + _numOfShelfLevel.ToString() + ", place in shelf: " + _placeInShelf;
             if (_Items.Count() == 0)
             {
-                result += "there is no items in this shelf.";
+                result += ", there is no items in this shelf.";
             }
             else
             {
+                result += " the items in the shelf : \n";
                 foreach (var item in Items)
                 {
-                    result += (item.ToString())+". \n";
+                    result += (item.ToString())+"\n";
                 }
             }
 
@@ -120,7 +122,7 @@ namespace RefrigeratorProject
             }
         }
 
-        public bool AddItem(Item item)
+        public bool EnterItem(Item item)
         {
             var isEnter = IsLeftPlaceFor(item);
 
@@ -154,7 +156,7 @@ namespace RefrigeratorProject
 
         public List<Item> RemoveExpiredItems()
         {
-            var now = DateTime.Now;
+            var now = DateTime.Now.AddDays(-1);
             var removedItem = new List<Item>();
 
             foreach (var item in _Items)

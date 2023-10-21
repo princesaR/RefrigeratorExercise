@@ -8,14 +8,14 @@ namespace RefrigeratorProject
 {
     public enum Cosher
     {
-        Milky,
+        Milky =1,
         Meat,
         Pareve
     }
 
     public enum Kind
     {
-        Food,
+        Food =1,
         Drink
     }
     
@@ -100,7 +100,7 @@ namespace RefrigeratorProject
 
         public override string ToString()
         {
-            var result = "Item id: " + _idItem + " name: " + _nameItem  + " kind: " + _kindOfItem + " cashtot: " + _cosher.ToString() + " expery date: " + _expiryDate.ToString() + " place taken by item: " + _placeTaken + " ";
+            var result = "Item id: " + _idItem + ", name: " + _nameItem  + ", kind: " + _kindOfItem + ", cashtot: " + _cosher.ToString() + ", expery date: " + _expiryDate.ToString() + ", place taken by item: " + _placeTaken;
             return result;
         }
 
