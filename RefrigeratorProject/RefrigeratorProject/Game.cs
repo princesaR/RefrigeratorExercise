@@ -17,11 +17,13 @@ namespace RefrigeratorProject
             var refrigerators = CreateRefrigerators();
             var currentRefrigerator = ChooseCurrent(refrigerators);
             var gameFunctions = new GameFunctions(currentRefrigerator, refrigerators);
+            var functions = GetGameFunctions(gameFunctions);
             Console.WriteLine("Console Application in C# for Refrigerators\r");
             Console.WriteLine("------------------------\n");
             Console.WriteLine("Note! your game is with random refrigerator from list of " + refrigerators.Count + " refrigerators. \n");
             PrintInstrucitons();
-            ActionByUserChoice(gameFunctions);
+
+            ActionByUserChoice(functions);
         }
 
         private static void PrintInstrucitons()
@@ -42,55 +44,45 @@ namespace RefrigeratorProject
 
         }
 
-        private static void ActionByUserChoice(GameFunctions gameFunctions)
+        private static void ActionByUserChoice(Dictionary<int , System.Action> functions)
         {
             var selectedAction = Console.ReadLine();
+            var num = 0;
             while (!selectedAction.Equals("100"))
             {
-
-                switch (selectedAction)
+                if (int.TryParse(selectedAction, out num) && num > 0 && num < 11)
                 {
-                    case "1":
-                        gameFunctions.PrintRefrigerator();
-                        break;
-                    case "2":
-                        gameFunctions.PrintLeftPlaceInRefrigerator();
-                        break;
-                    case "3":
-                        gameFunctions.AddItemFromUser();
-                        break;
-                    case "4":
-                        gameFunctions.PutOutItemWithId();
-                        break;
-                    case "5":
-                        gameFunctions.CleanRefrigerator();
-                        break;
-                    case "6":
-                        gameFunctions.WhatIWantToEat();
-                        break;
-                    case "7":
-                        gameFunctions.ItemsOrderByExpiryDate();
-                        break;
-                    case "8":
-                        gameFunctions.ShelvesOedersByLeftPlace();
-                        break;
-                    case "9":
-                        gameFunctions.RefrigeratorsOrdersByLeftPlace();
-                        break;
-                    case "10":
-                        gameFunctions.GetReadyForShopping();
-                        break;
-                    default:
-                        Console.WriteLine("You did not enter any of the options above.");
-                        break;
+
+                    functions[num]();
+                }
+                else
+                {
+                    Console.WriteLine("You did not enter any of the options above.");
                 }
                 Console.WriteLine("===================================================");
                 Console.Write("Your option? \nenter yout choice here: ");
                 selectedAction = Console.ReadLine();
+            }  
+         }
 
-            }
+        
+
+        private static Dictionary<int, System.Action> GetGameFunctions(GameFunctions gameFunctions)
+        {
+            var functions = new Dictionary<int, System.Action>();
+            functions[1] = gameFunctions.PrintRefrigerator;
+            functions[2] = gameFunctions.PrintLeftPlaceInRefrigerator;
+            functions[3] = gameFunctions.AddItemFromUser;
+            functions[4] = gameFunctions.PutOutItemWithId;
+            functions[5] = gameFunctions.CleanRefrigerator;
+            functions[6] = gameFunctions.WhatIWantToEat;
+            functions[7] = gameFunctions.ItemsOrderByExpiryDate;
+            functions[8] = gameFunctions.ShelvesOedersByLeftPlace;
+            functions[9] = gameFunctions.RefrigeratorsOrdersByLeftPlace;
+            functions[10] = gameFunctions.GetReadyForShopping;
+
+            return functions;
         }
-
         private static List<Refrigerator> CreateRefrigerators()
         {
             var refrigerators = new List<Refrigerator>();
