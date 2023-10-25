@@ -17,16 +17,11 @@ namespace RefrigeratorProject
             var refrigerators = CreateRefrigerators();
             var currentRefrigerator = ChooseCurrent(refrigerators);
             var gameFunctions = new GameFunctions(currentRefrigerator, refrigerators);
-
             Console.WriteLine("Console Application in C# for Refrigerators\r");
             Console.WriteLine("------------------------\n");
-
             Console.WriteLine("Note! your game is with random refrigerator from list of " + refrigerators.Count + " refrigerators. \n");
-            
             PrintInstrucitons();
             ActionByUserChoice(gameFunctions);
-            
-
         }
 
         public static void PrintInstrucitons()
