@@ -24,7 +24,7 @@ namespace RefrigeratorProject
             ActionByUserChoice(gameFunctions);
         }
 
-        public static void PrintInstrucitons()
+        private static void PrintInstrucitons()
         {
             Console.WriteLine("Choose an option from the following list:\n");
             Console.WriteLine("\t1 - Viewing the contents of a refrigerator.\n");
@@ -42,7 +42,7 @@ namespace RefrigeratorProject
 
         }
 
-        public static void ActionByUserChoice(GameFunctions gameFunctions)
+        private static void ActionByUserChoice(GameFunctions gameFunctions)
         {
             var selectedAction = Console.ReadLine();
             while (!selectedAction.Equals("100"))
@@ -91,7 +91,7 @@ namespace RefrigeratorProject
             }
         }
 
-        public static List<Refrigerator> CreateRefrigerators()
+        private static List<Refrigerator> CreateRefrigerators()
         {
             var refrigerators = new List<Refrigerator>();
 
@@ -134,7 +134,7 @@ namespace RefrigeratorProject
             return refrigerators;
         }
       
-        public static Refrigerator ChooseCurrent( List<Refrigerator> refrigerators)
+        private static Refrigerator ChooseCurrent( List<Refrigerator> refrigerators)
         {
             var random = new Random();
             var currentRefrigerator = refrigerators.ElementAt(random.Next(refrigerators.Count));
