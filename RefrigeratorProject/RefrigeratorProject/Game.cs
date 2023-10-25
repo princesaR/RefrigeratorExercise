@@ -25,7 +25,6 @@ namespace RefrigeratorProject
 
             ActionByUserChoice(functions);
         }
-
         private static void PrintInstrucitons()
         {
             Console.WriteLine("Choose an option from the following list:\n");
@@ -43,7 +42,6 @@ namespace RefrigeratorProject
             Console.Write("Your option? \n enter your choice here: ");
 
         }
-
         private static void ActionByUserChoice(Dictionary<int , System.Action> functions)
         {
             var selectedAction = Console.ReadLine();
@@ -64,9 +62,6 @@ namespace RefrigeratorProject
                 selectedAction = Console.ReadLine();
             }  
          }
-
-        
-
         private static Dictionary<int, System.Action> GetGameFunctions(GameFunctions gameFunctions)
         {
             var functions = new Dictionary<int, System.Action>();
@@ -85,15 +80,14 @@ namespace RefrigeratorProject
         }
         private static List<Refrigerator> CreateRefrigerators()
         {
-            var refrigerators = new List<Refrigerator>();
+           var refrigerators = new List<Refrigerator>();
 
-            var refrigerator1 = new Refrigerator("model1", "white", 3,
+           var refrigerator1 = new Refrigerator("model1", "white", 3,
            new List<Shelf>() {
             new Shelf(1, 20.0, new List<Item>()),
             new Shelf(2, 10.0, new List<Item>()),
             new Shelf(3, 10.0, new List<Item>()),
            });
-
 
             var refrigerator2 = new Refrigerator("model1", "black", 3,
                new List<Shelf>() {
@@ -115,27 +109,20 @@ namespace RefrigeratorProject
             refrigerator1.EnterItem(new Item("chips", Kind.Food, Cosher.Meat, DateTime.Now.AddDays(1), 5.0));
             refrigerator1.EnterItem(new Item("chips", Kind.Food, Cosher.Milky, DateTime.Now.AddDays(100), 5.0));
             refrigerator1.EnterItem(new Item("chips", Kind.Food, Cosher.Milky, DateTime.Now.AddDays(100), 5.0));
-
-
-
             refrigerators.Add(refrigerator1);
             refrigerators.Add(refrigerator2);
             refrigerators.Add(refrigerator3);
 
-
             return refrigerators;
         }
-      
         private static Refrigerator ChooseCurrent( List<Refrigerator> refrigerators)
         {
             var random = new Random();
             var currentRefrigerator = refrigerators.ElementAt(random.Next(refrigerators.Count));
+
             return currentRefrigerator;
         }
 
-
-
-
-
     }
+
 }
