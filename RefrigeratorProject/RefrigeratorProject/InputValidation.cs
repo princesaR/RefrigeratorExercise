@@ -30,13 +30,12 @@ namespace RefrigeratorProject
         public static Kind EnterKind()
         {
             var input = 0;
-            do
+            while (input != 1 && input != 2)
             {
                 Console.WriteLine("enter the kind of the item. 1 for food 2 for drink");
                 Console.Write("enter your choice: ");
                 input = IsInputNum();
-            } while (input != 1 && input != 2);
-
+            } 
             var kind = (Kind)input;
 
             return kind;
@@ -44,14 +43,12 @@ namespace RefrigeratorProject
         public static Cosher EnterCosher()
         {
             var input = 0;
-            do
+            while (input != 1 && input != 2 && input != 3)
             {
                 Console.WriteLine("enter the Cosher of the Item 1 for milky 2 for meaty 3 for pareve");
                 Console.Write("enter your choice: ");
                 input = IsInputNum();
-
-            } while (input != 1 && input != 2 && input != 3);
-
+            }
             var cosher = (Cosher)input;
 
             return cosher;
