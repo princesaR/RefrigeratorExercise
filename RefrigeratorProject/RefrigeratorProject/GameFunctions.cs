@@ -7,18 +7,10 @@ using System.Threading.Tasks;
 
 namespace RefrigeratorProject
 {
-    public  class GameFunctions
-    {
-        public Refrigerator currentRefrigerator { get; set; }
-        public List<Refrigerator> refrigerators { get; set; }
+    public class GameFunctions
+    { 
 
-
-        public GameFunctions(Refrigerator refrigerator, List<Refrigerator> refrigerators)
-        {
-            this.currentRefrigerator = refrigerator;
-            this.refrigerators = refrigerators;
-        }
-        private Item InputItem()
+        private static Item InputItem()
         {
             var name = EnterName();
             var kind = EnterKind();
@@ -31,13 +23,13 @@ namespace RefrigeratorProject
             return Item;
 
         }
-        private string EnterName()
+        private static string EnterName()
         {
             Console.Write("enetr the name of the item\n enter your choice: ");
             var name = Console.ReadLine();
             return name;
         }
-        private Kind EnterKind()
+        private static Kind EnterKind()
         {
             var input = 0;
             do
@@ -50,7 +42,7 @@ namespace RefrigeratorProject
             var kind = (Kind)input;
             return kind;
         }
-        private Cosher EnterCosher()
+        private static Cosher EnterCosher()
         {
             var input = 0;
             do
@@ -64,7 +56,7 @@ namespace RefrigeratorProject
             var cosher = (Cosher)input;
             return cosher;
         }
-        private DateTime EnterDate()
+        private static DateTime EnterDate()
         {
             Console.WriteLine("enter the Expiry Date of the item in format [mm/dd/yy] ");
             Console.Write("enter your choice: ");
@@ -73,22 +65,21 @@ namespace RefrigeratorProject
             return date;
 
         }
-        private double EnterPlace()
+        private static double EnterPlace()
         {
             Console.WriteLine("enter the place taken by the item");
             Console.Write("enter your choice: ");
             var place = IsInputDouble();
             return place;
         }
-        private string EnterItemId()
+        private static string EnterItemId()
         {
             Console.WriteLine("enter ID of the Item");
             Console.Write("enter your choice: ");
             var itemId = IsInputNum().ToString();
             return itemId;
         }
-
-        private int IsInputNum()
+        private static int IsInputNum()
         {
             var valid = false;
             var input = "";
@@ -109,7 +100,7 @@ namespace RefrigeratorProject
             }
             return number;
         }
-        private double IsInputDouble()
+        private static double IsInputDouble()
         {
             var valid = false;
             var input = "";
@@ -131,7 +122,7 @@ namespace RefrigeratorProject
             return doubleNum;
 
         }
-        private DateTime IsInputDate()
+        private static DateTime IsInputDate()
         {
             var valid = false;
             var input = "";
@@ -153,19 +144,16 @@ namespace RefrigeratorProject
             return date;
         }
 
-
-        public void PrintRefrigerator()
+        public static void PrintRefrigerator(Refrigerator currentRefrigerator)
         {
-            Console.WriteLine( currentRefrigerator);
+            Console.WriteLine(currentRefrigerator);
         }
-
-        public void PrintLeftPlaceInRefrigerator()
+        public static void PrintLeftPlaceInRefrigerator(Refrigerator currentRefrigerator)
         {
             var place = currentRefrigerator.PlaceLeftinRefrigerator();
             Console.WriteLine("Left place in refrigerator : " + place);
         }
-       
-        public void AddItemFromUser()
+        public static void AddItemFromUser(Refrigerator currentRefrigerator)
         {
             var newItem = InputItem();
             var isEntered = currentRefrigerator.EnterItem(newItem);
@@ -178,8 +166,7 @@ namespace RefrigeratorProject
                 Console.WriteLine("there is no place for the item in this refrigerator.");
             }
         }
-        
-        public void PutOutItemWithId()
+        public static void PutOutItemWithId(Refrigerator currentRefrigerator)
         {
             var id = EnterItemId();
             var takenItem = currentRefrigerator.TakeOutItem(id);
@@ -192,8 +179,7 @@ namespace RefrigeratorProject
                 Console.WriteLine("The item who taken out is: " + takenItem);
             }
         }
-        
-        public void CleanRefrigerator()
+        public static void CleanRefrigerator(Refrigerator currentRefrigerator)
         {
            var removedItems =  currentRefrigerator.RemoveExpiredItems();
             if( removedItems.Count > 0 )
@@ -207,8 +193,7 @@ namespace RefrigeratorProject
             }
            
         }
-        
-        public void WhatIWantToEat()
+        public static void WhatIWantToEat(Refrigerator currentRefrigerator)
         {
             Console.WriteLine("choose kind of item and chosher of item");
             var kind = EnterKind();
@@ -224,8 +209,7 @@ namespace RefrigeratorProject
                 Console.WriteLine( " there is no item with this spesific order.");
             }
         }
-
-        public void ItemsOrderByExpiryDate()
+        public static void ItemsOrderByExpiryDate(Refrigerator currentRefrigerator)
         {
             var itemsByExpiryDate = currentRefrigerator.SortAllItemsByExpiraynDate();
             if ( itemsByExpiryDate.Count > 0)
@@ -239,8 +223,7 @@ namespace RefrigeratorProject
             }
             
         }
-
-        public void ShelvesOedersByLeftPlace()
+        public static void ShelvesOedersByLeftPlace(Refrigerator currentRefrigerator)
         {
             var shelvesByLeftPlace = currentRefrigerator.SortedShelvesByLeftPlace();
             Console.WriteLine(" shelves sorted by their left place");
@@ -249,8 +232,7 @@ namespace RefrigeratorProject
                 Console.WriteLine(shelf + "\n");
             }
         }
-
-        public void RefrigeratorsOrdersByLeftPlace()
+        public static void RefrigeratorsOrdersByLeftPlace(List<Refrigerator> refrigerators)
         {
            var refrigeratorsByLeftPlace =  Refrigerator.SortedRefrigeratorsByLeftPlace(refrigerators);
             Console.WriteLine(" Refrigerators sorted by their left place");
@@ -260,13 +242,11 @@ namespace RefrigeratorProject
             }
 
         }
-
-        public void GetReadyForShopping()
+        public static void GetReadyForShopping(Refrigerator currentRefrigerator)
         {
             currentRefrigerator.Shopping();
         }
-
-        public void PrintList( List<Item> items )
+        public static void PrintList( List<Item> items )
         {
             foreach( var item in items ) 
             {
