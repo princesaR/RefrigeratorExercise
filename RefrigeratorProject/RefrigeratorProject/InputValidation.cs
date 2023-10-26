@@ -15,7 +15,6 @@ namespace RefrigeratorProject
             var cosher = EnterCosher();
             var date = EnterDate();
             var place = EnterPlace();
-
             var Item = new Item(name, kind, cosher, date, place);
 
             return Item;
@@ -25,6 +24,7 @@ namespace RefrigeratorProject
         {
             Console.Write("enetr the name of the item\n enter your choice: ");
             var name = Console.ReadLine();
+
             return name;
         }
         public static Kind EnterKind()
@@ -38,6 +38,7 @@ namespace RefrigeratorProject
             } while (input != 1 && input != 2);
 
             var kind = (Kind)input;
+
             return kind;
         }
         public static Cosher EnterCosher()
@@ -52,6 +53,7 @@ namespace RefrigeratorProject
             } while (input != 1 && input != 2 && input != 3);
 
             var cosher = (Cosher)input;
+
             return cosher;
         }
         public static DateTime EnterDate()
@@ -61,13 +63,13 @@ namespace RefrigeratorProject
             var date = IsInputDate();
 
             return date;
-
         }
         public static double EnterPlace()
         {
             Console.WriteLine("enter the place taken by the item");
             Console.Write("enter your choice: ");
             var place = IsInputDouble();
+
             return place;
         }
         public static string EnterItemId()
@@ -75,6 +77,7 @@ namespace RefrigeratorProject
             Console.WriteLine("enter ID of the Item");
             Console.Write("enter your choice: ");
             var itemId = IsInputNum().ToString();
+
             return itemId;
         }
         public static int IsInputNum()
@@ -96,6 +99,7 @@ namespace RefrigeratorProject
                 }
 
             }
+
             return number;
         }
         public static double IsInputDouble()
@@ -117,8 +121,8 @@ namespace RefrigeratorProject
                     Console.WriteLine("\nPlease enter the number again: ");
                 }
             }
-            return doubleNum;
 
+            return doubleNum;
         }
         public static DateTime IsInputDate()
         {
@@ -139,6 +143,7 @@ namespace RefrigeratorProject
                     Console.WriteLine("\nPlease enter the date again: ");
                 }
             }
+
             return date;
         }
     }
