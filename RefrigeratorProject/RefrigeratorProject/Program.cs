@@ -11,8 +11,8 @@ namespace RefrigeratorProject
     {
         static void Main(string[] args)
         {
-
-            Game.StartGame();
+            var game = new Game();
+            game.StartGame();
            
         }
     }
